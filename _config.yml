@@ -1,10 +1,10 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: WORKSHOP TITLE
-author: YOUR NAME
-copyright: "202X"
-logo: img/datalab-logo-full-color-rgb-1.png
+title: Python Packaging Demo
+author: Nick Ulle
+copyright: "2024"
+  #logo: img/datalab-logo-full-color-rgb-1.png
 only_build_toc_files: true
 
 # Force re-execution of notebooks on each build.
