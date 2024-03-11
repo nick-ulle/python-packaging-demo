@@ -336,7 +336,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -352,6 +354,17 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-the-package">1.1. Creating the Package</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-the-package">1.2. Installing the Package</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-package">1.3. Using the Package</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">1.4. References</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -363,7 +376,102 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="python-packaging-demo">
 <h1><span class="section-number">1. </span>Python Packaging Demo<a class="headerlink" href="#python-packaging-demo" title="Permalink to this heading">#</a></h1>
-<p>WIP</p>
+<p>Why package your code?</p>
+<ul class="simple">
+<li><p>You can use the code from anywhere on your computer (less messing with file
+paths)</p></li>
+<li><p>Easier to deploy on other computers or share with collaborators</p></li>
+<li><p>Ready to go if you decide to distribute the package</p></li>
+</ul>
+<section id="creating-the-package">
+<h2><span class="section-number">1.1. </span>Creating the Package<a class="headerlink" href="#creating-the-package" title="Permalink to this heading">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is just one way to create a package. There are others—see the references
+in <a class="reference internal" href="#references"><span class="std std-numref">Section 1.4</span></a>.</p>
+</div>
+<p>To create a package, you need to:</p>
+<ol class="arabic">
+<li><p>Set up a directory named after the package for the package code. If you’ve
+been using <code class="docutils literal notranslate"><span class="pre">src/</span></code>, it’s usually a good idea to make a subdirectory there. So
+if the package is called <code class="docutils literal notranslate"><span class="pre">dpug</span></code>, make <code class="docutils literal notranslate"><span class="pre">src/dpug</span></code> and put the code there.</p></li>
+<li><p>Create a file <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> in each subdirectory of the package. For
+example, in <code class="docutils literal notranslate"><span class="pre">dpug/__init__.py</span></code>. This file can be empty or a module to import
+when the package/directory is imported (for example, when the user runs
+<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">dpug</span></code>).</p></li>
+<li><p>Create a <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file in the same directory as <code class="docutils literal notranslate"><span class="pre">src/</span></code>. There are
+many ways to customize this file (and your package). A minimal example is:</p>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="c1"># Package metadata</span>
+<span class="k">[project]</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;dpug&quot;</span>
+<span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.0.1&quot;</span>
+<span class="n">authors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;Nick Ulle&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s2">&quot;nick.ulle@gmail.com&quot;</span><span class="w"> </span><span class="p">},</span>
+<span class="p">]</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;DPUG Demo Package&quot;</span>
+<span class="n">readme</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;README.md&quot;</span>
+<span class="n">requires-python</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&gt;=3.10&quot;</span>
+
+<span class="c1"># Where to find the package code (if the package directory is in another</span>
+<span class="c1"># directory).</span>
+<span class="k">[tool.setuptools.packages.find]</span>
+<span class="n">where</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;src&quot;</span><span class="p">]</span>
+
+<span class="c1"># How to build the package. Use setuptools unless you know you need</span>
+<span class="c1"># something else.</span>
+<span class="k">[build-system]</span>
+<span class="n">requires</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;setuptools&quot;</span><span class="p">]</span>
+<span class="n">build-backend</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;setuptools.build_meta&quot;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="installing-the-package">
+<h2><span class="section-number">1.2. </span>Installing the Package<a class="headerlink" href="#installing-the-package" title="Permalink to this heading">#</a></h2>
+<p>If you want to use the package while you’re working on it, create an <strong>editable
+install</strong>. To do this, open a terminal at the top level project directory,
+activate the conda environment you use for the project, and then run:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+<p>This command creates soft links (symlinks) to the code in the package. Any
+changes you make to the code will be reflected in the installed package
+<em>without the need to reinstall</em>, although you may have to restart Python.</p>
+<p>If you want a regular install (non-editable), leave out the <code class="docutils literal notranslate"><span class="pre">-e</span></code>. This will
+copy the files rather than creating soft links.</p>
+</section>
+<section id="using-the-package">
+<h2><span class="section-number">1.3. </span>Using the Package<a class="headerlink" href="#using-the-package" title="Permalink to this heading">#</a></h2>
+<p>You can import the package with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dpug</span>
+</pre></div>
+</div>
+<p>The package should also appear as <code class="docutils literal notranslate"><span class="pre">dpug</span></code> in the output of <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">list</span></code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you use an editable install and IPython or Jupyter, the [autoreload][]
+extension can automatically reload packages as you modify them (most of the
+time). The extension is built-in; you can enable it by running these commands
+in an IPython or Jupyter session:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
+<span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>If you change a file and find that the extension doesn’t detect it, try saving
+the file and running the associated <code class="docutils literal notranslate"><span class="pre">import</span></code> line again.</p>
+</div>
+</section>
+<section id="references">
+<span id="id1"></span><h2><span class="section-number">1.4. </span>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The <a class="reference external" href="https://packaging.python.org/en/latest/">Python Packaging User Guide</a>, by the developers of <code class="docutils literal notranslate"><span class="pre">pip</span></code> and
+other packaging tools</p></li>
+<li><p>The <a class="reference external" href="https://www.pyopensci.org/python-package-guide/">pyOpenSci Python Package Guide</a></p></li>
+<li><p><a class="reference external" href="https://py-pkgs.org/welcome">Python Packages</a> by Beuzen &amp; Timbers, a CRC Press book</p></li>
+<li><p><a class="reference external" href="https://python-notes.curiousefficiency.org/en/latest/python_concepts/import_traps.html">Traps for the Unwary in Python’s Import System</a> by Coghlan</p></li>
+</ul>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -411,6 +519,23 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-the-package">1.1. Creating the Package</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-the-package">1.2. Installing the Package</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-package">1.3. Using the Package</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">1.4. References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
